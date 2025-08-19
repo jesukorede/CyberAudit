@@ -8,4 +8,4 @@ restartPolicyMaxRetries = 10
 
 [env]
 NODE_ENV = "production"
-# Remove the fixed PORT - let Railway set it dynamically
+# Railway will automatically set PORT - don't override it

@@ -1,10 +1,7 @@
+.env
 node_modules
 .git
-.env.local
-.env.development
-dist
-build
-.cache
-.temp
+*.log
+client/src
 attached_assets
-.local
+.config
