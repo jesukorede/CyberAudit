@@ -1,11 +1,11 @@
 [build]
-builder = "nixpacks"
+nixpacksConfigPath = "nixpacks.toml"
 
 [deploy]
 startCommand = "npm start"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10
 
-[environments.production]
-PORT = 3000
+[env]
 NODE_ENV = "production"
+# Remove the fixed PORT - let Railway set it dynamically
