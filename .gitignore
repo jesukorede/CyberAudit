@@ -5,3 +5,38 @@ server/public
 vite.config.ts.*
 *.tar.gz
 .vercel
+
+# Environment variables (CRITICAL)
+.env
+.env.local
+.env.production
+.env.staging
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Build outputs
+build/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
