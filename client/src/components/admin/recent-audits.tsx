@@ -57,7 +57,7 @@ export function RecentAudits() {
               <Skeleton key={i} className="h-20 w-full bg-cyber-dark-3" />
             ))}
           </div>
-        ) : audits && audits.length > 0 ? (
+        ) : Array.isArray(audits) && audits.length > 0 ? (
           <div className="space-y-4">
             {audits.map((audit: any) => (
               <div key={audit.id} className="bg-cyber-dark border border-gray-600 rounded-lg p-4 hover:border-cyber-cyan/40 transition-colors">

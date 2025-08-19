@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express, { type Request, Response, NextFunction } from "express";
 import { createServer } from "http";
 import { registerRoutes } from "./routes";
@@ -70,3 +71,6 @@ app.use((req, res, next) => {
     log(`serving on port ${port}`);
   });
 })();
+
+// Add a comment at the top
+// Updated for Railway deployment
