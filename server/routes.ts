@@ -6,6 +6,7 @@ import session from "express-session";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import connectPgSimple from "connect-pg-simple";
 
 declare module "express-session" {
   interface SessionData {
@@ -94,16 +95,31 @@ function requireRole(role: string) {
 }
 
 export function registerRoutes(app: Express) {
-  // Configure session middleware
-  app.use(session({
+  // Configure session store
+  const PgSession = connectPgSimple(session);
+  
+  const sessionConfig: any = {
     secret: process.env.SESSION_SECRET || "cyber-chari-secret-key",
     resave: false,
     saveUninitialized: false,
     cookie: { 
       secure: process.env.NODE_ENV === "production",
-      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
     }
-  }));
+  };
+
+  // Use PostgreSQL session store in production
+  if (process.env.NODE_ENV === "production" && process.env.DATABASE_URL) {
+    sessionConfig.store = new PgSession({
+      conString: process.env.DATABASE_URL,
+      tableName: 'session',
+      createTableIfMissing: true
+    });
+  }
+
+  app.use(session(sessionConfig));
 
   app.use(passport.initialize());
   app.use(passport.session());
