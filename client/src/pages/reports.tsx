@@ -78,9 +78,9 @@ export default function Reports() {
                 </Card>
               ))}
             </div>
-          ) : reports && reports.length > 0 ? (
+          ) : reports && Array.isArray(reports) && reports.length > 0 ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {reports.map((report: any) => (
+              {(reports as any[]).map((report: any) => (
                 <Card key={report.id} className="bg-cyber-dark-2 border-cyber-cyan/20 hover:border-cyber-cyan/40 transition-colors">
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between mb-4">

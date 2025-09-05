@@ -17,7 +17,7 @@ export default function AdminPanel() {
     if (!isLoading && !isAuthenticated) {
       setLocation("/login");
     }
-    if (!isLoading && isAuthenticated && user?.role !== 'admin') {
+    if (!isLoading && isAuthenticated && (user as { role?: string })?.role !== 'admin') {
       setLocation("/dashboard");
     }
   }, [isAuthenticated, isLoading, user, setLocation]);
@@ -30,7 +30,7 @@ export default function AdminPanel() {
     );
   }
 
-  if (!isAuthenticated || !user || user.role !== 'admin') {
+  if (!isAuthenticated || !user || (user as { role?: string })?.role !== 'admin') {
     return null;
   }
 

@@ -89,9 +89,9 @@ export default function Repositories() {
                 </Card>
               ))}
             </div>
-          ) : repositories && repositories.length > 0 ? (
+          ) : repositories && Array.isArray(repositories) && repositories.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {repositories.map((repo: any) => (
+              {(repositories as any[]).map((repo: any) => (
                 <Card key={repo.id} className="bg-cyber-dark-2 border-cyber-cyan/20 hover:border-cyber-cyan/40 transition-colors">
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between mb-4">
