@@ -32,7 +32,7 @@ export function StatsGrid() {
   const statItems = [
     {
       title: "Total Users",
-      value: stats?.totalUsers || 0,
+      value: (stats as { totalUsers?: number })?.totalUsers || 0,
       icon: Users,
       bgGradient: "from-cyan-500 to-cyan-600",
       textColor: "text-cyan-400",
@@ -40,7 +40,7 @@ export function StatsGrid() {
     },
     {
       title: "Active Audits", 
-      value: stats?.activeAudits || 0,
+      value: (stats as { activeAudits?: number })?.activeAudits || 0,
       icon: Search,
       bgGradient: "from-green-500 to-green-600",
       textColor: "text-green-400",
@@ -48,7 +48,7 @@ export function StatsGrid() {
     },
     {
       title: "Repositories",
-      value: stats?.totalRepositories || 0,
+      value: (stats as { totalRepositories?: number })?.totalRepositories || 0,
       icon: GitBranch,
       bgGradient: "from-blue-500 to-blue-600",
       textColor: "text-blue-400",
@@ -56,7 +56,7 @@ export function StatsGrid() {
     },
     {
       title: "Vulnerabilities",
-      value: stats?.criticalIssues || 0,
+      value: (stats as { criticalIssues?: number })?.criticalIssues || 0,
       icon: AlertTriangle,
       bgGradient: "from-red-500 to-red-600",
       textColor: "text-red-400",

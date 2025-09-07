@@ -109,14 +109,23 @@ export function registerRoutes(app: Express) {
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
     }
   };
-
-  // Use PostgreSQL session store in production
+  
+  // Use PostgreSQL session store in production with better error handling
   if (process.env.NODE_ENV === "production" && process.env.DATABASE_URL) {
-    sessionConfig.store = new PgSession({
-      conString: process.env.DATABASE_URL,
-      tableName: 'session',
-      createTableIfMissing: true
-    });
+    try {
+      sessionConfig.store = new PgSession({
+        conString: process.env.DATABASE_URL,
+        tableName: 'session',
+        createTableIfMissing: true,
+        ttl: 24 * 60 * 60 // 24 hours in seconds
+      });
+      console.log('✅ PostgreSQL session store configured');
+    } catch (error) {
+      console.error('❌ Failed to configure PostgreSQL session store:', error);
+      // Fallback to memory store if PostgreSQL fails
+    }
+  } else {
+    console.log('⚠️  Using memory session store (development mode)');
   }
 
   app.use(session(sessionConfig));
@@ -151,8 +160,12 @@ export function registerRoutes(app: Express) {
   );
 
   app.get("/api/auth/google/callback",
-    passport.authenticate('google', { failureRedirect: '/login' }),
+    passport.authenticate('google', { 
+      failureRedirect: '/login?error=oauth_failed',
+      failureMessage: true 
+    }),
     (req, res) => {
+      console.log('✅ Google OAuth successful for user:', req.user);
       res.redirect('/dashboard');
     }
   );
@@ -299,5 +312,15 @@ export function registerRoutes(app: Express) {
       console.error("Error fetching vulnerabilities:", error);
       res.status(500).json({ error: "Failed to fetch vulnerabilities" });
     }
+  });
+
+  // Health check endpoint
+  app.get("/api/health", (req, res) => {
+    res.json({ 
+      status: "healthy", 
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV,
+      port: process.env.PORT
+    });
   });
 }
