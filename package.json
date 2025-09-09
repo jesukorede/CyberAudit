@@ -105,8 +105,7 @@
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.17",
     "tsx": "^4.19.1",
-    "typescript": "5.6.3",
-    // Remove vite and @vitejs/plugin-react from here
+    "typescript": "5.6.3"
   },
   "optionalDependencies": {
     "@rollup/rollup-android-arm-eabi": "^4.50.0",
